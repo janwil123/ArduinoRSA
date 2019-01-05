@@ -2,6 +2,7 @@
 #include "BigNumber.h"
 
 int i;
+unsigned long time1, time2;
 
 // function to display a big number and free it afterwards
 void printBignum (BigNumber & n)
@@ -23,28 +24,34 @@ void setup ()
   //BigNumber N   = p*q-one;
 
   BigNumber p = 2;
+  BigNumber q = 3;
   
 
   BigNumber N = p.pow(137)-one; //Mersenne number 2^137-1 = 32032215596496435569*5439042183600204290159
   printBignum(N);
 
-  //BigNumber d = 58021664585639791181184025950440248398226136069516938232493687505822471836536824298822733710342250697739996825938232641940670857624514103125986134050997697160127301547995788468137887651823707102007839;
-  String d = "101";
+  String d = "11111011011"; //2011, a prime
   int dl = d.length();
 
-  BigNumber m = 3;
+  BigNumber m = q.pow(86); //Just a large number a bit less than N
   BigNumber c = 1;
   
   for(i=0; i<dl; i++){
     if (d[0] == '0'){
-      c = (c*c)%N;
       Serial.println("Null");
-      printBignum(c);
+      time1 = micros();
+      c = (c*c)%N;
+      time2 = micros();
+      Serial.print("Computing time: ");
+      Serial.println(time2-time1);
     }
     else {
-      c = (c*c*m)%N;
       Serial.println("Yks");
-      printBignum(c);
+      time1 = micros();
+      c = (((c*c)%N)*m)%N;
+      time2 = micros();
+      Serial.print("Computing time: ");
+      Serial.println(time2-time1);
     }
     d.remove(0,1);
   }
