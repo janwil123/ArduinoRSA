@@ -34,7 +34,7 @@ void setup ()
   int dl = d.length();
 
   BigNumber m = q.pow(86); //Just a large number a bit less than N
-  BigNumber c = 1;
+  BigNumber c = N-one; //It actually should be 1, but the first squaring will then be too fast
   
   for(i=0; i<dl; i++){
     if (d[0] == '0'){
@@ -48,7 +48,7 @@ void setup ()
     else {
       Serial.println("Yks");
       time1 = micros();
-      c = (((c*c)%N)*m)%N;
+      c = (((c*m)%N)*c)%N;
       time2 = micros();
       Serial.print("Computing time: ");
       Serial.println(time2-time1);
