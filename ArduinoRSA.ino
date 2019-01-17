@@ -18,23 +18,19 @@ void setup ()
   Serial.begin (9600);
   BigNumber::begin ();  // initialize library
 
-  //BigNumber p   = 48112959837082048697;
-  //BigNumber q   = 54673257461630679457;
+  BigNumber p   = "48112959837082048697";
+  BigNumber q   = "54673257461630679457";
+  //BigNumber p   = "1104427674207891849286335233";
+  //BigNumber q   = "1119416189101109149181191199";
   BigNumber one = 1;
-  //BigNumber N   = p*q-one;
-
-  BigNumber p = 2;
-  BigNumber q = 3;
-  
-
-  BigNumber N = p.pow(137)-one; //Mersenne number 2^137-1 = 32032215596496435569*5439042183600204290159
+  BigNumber N   = p*q;
   printBignum(N);
 
   String d = "11111011011"; //2011, a prime
   int dl = d.length();
 
-  BigNumber m = q.pow(86); //Just a large number a bit less than N
-  BigNumber c = N-one; //It actually should be 1, but the first squaring will then be too fast
+  BigNumber m = (p-one)*(q-one); //Just a large number a bit less than N
+  BigNumber c = N-one; //The initial value should actually be 1, but the first squaring will then be too fast. c^2=1 mod N, too.
   
   for(i=0; i<dl; i++){
     if (d[0] == '0'){
